@@ -32,12 +32,12 @@ public class Movement : MonoBehaviour
         {
             transform.position += transform.right * Speed * Time.deltaTime;
         }
-        //if (Input.GetKey(KeyCode.W) && isGrounded)
-        //{
+        if (Input.GetKey(KeyCode.W) && isGrounded)
+        {
 
-            //rb.AddForce(jump * jumpForce, ForceMode.Impulse);
-            //isGrounded = false;
-        //}
+            rb.AddForce(jump * jumpForce, ForceMode.Impulse);
+            isGrounded = false;
+        }
     }
 }
 

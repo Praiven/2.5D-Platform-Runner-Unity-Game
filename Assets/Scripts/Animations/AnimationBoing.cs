@@ -21,19 +21,36 @@ public class AnimationBoing : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool rightPressed = Input.GetKeyDown("d");
-        bool leftPressed = Input.GetKeyDown("a");
-        bool jumpPressed = Input.GetKey("w");
+        bool rightPressed = Input.GetKey("d");
+        bool leftPressed = Input.GetKey("a");
+        bool jumpPressed = Input.GetKeyDown("w");
 
         if (rightPressed)
         {
             isMovingRight = true;
         }
+        else
+        {
+            isMovingRight = false;
+        }
         if (leftPressed)
         {
             isMovingLeft = true;
         }
+        else
+        {
+            isMovingLeft = false;
+        }
+        if (jumpPressed)
+        {
+            isJumping = true;
+        }
+        else
+        {
+            isJumping = false;
+        }
         animator.SetBool("RightPressed", isMovingRight);
         animator.SetBool("LeftPressed", isMovingLeft);
+        animator.SetBool("JumpPressed", isJumping);
     }
 }
