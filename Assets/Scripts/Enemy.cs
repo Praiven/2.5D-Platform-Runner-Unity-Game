@@ -30,7 +30,15 @@ public class Enemy : MonoBehaviour
         if (!other.CompareTag("Player"))
         {
             movingRight = !movingRight;
-            transform.Rotate(0, 180, 0); // Rotate 180 degrees around the Y-axis
+            if (movingRight)
+            {
+                gameObject.transform.eulerAngles = new Vector3(gameObject.transform.eulerAngles.x, gameObject.transform.eulerAngles.y - 180, gameObject.transform.eulerAngles.z);
+            }
+            else
+            {
+                gameObject.transform.eulerAngles = new Vector3(gameObject.transform.eulerAngles.x, gameObject.transform.eulerAngles.y + 180, gameObject.transform.eulerAngles.z);
+            }
+            
         }
     }
 }
