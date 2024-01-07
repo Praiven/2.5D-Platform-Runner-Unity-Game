@@ -12,11 +12,13 @@ public class Player : MonoBehaviour
     public bool isGrounded;
     Rigidbody rb;
     bool facingRight = true; // Assuming the player starts facing right
+    [SerializeField] Canvas deathScene;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         jump = new Vector3(0.0f, 2.0f, 0.0f);
+        deathScene.enabled = false;
     }
 
     void OnCollisionStay()
@@ -58,7 +60,9 @@ public class Player : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            Debug.Log("you died MAN");
+            Destroy(gameObject);
+            deathScene.enabled = true;
+            Time.timeScale = 0f;
         }
     }
 }
