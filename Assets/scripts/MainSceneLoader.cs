@@ -15,4 +15,13 @@ public class MainSceneLoader : MonoBehaviour
         SceneManager.LoadSceneAsync("StartingMenu");
 
     }
+
+    public void Restart()
+    {
+        if (Time.timeScale == 0f)
+        {
+            Time.timeScale = 1f;
+        }
+        SceneManager.LoadSceneAsync("MainScene");
+    }
 }

@@ -8,7 +8,6 @@ public class Player : MonoBehaviour
     public float speed = 5;
     private int hp;
     bool facingRight = true; // Assuming the player starts facing right
-    [SerializeField] AudioSource killSound;
     [SerializeField] Canvas deathScene;
     [SerializeField] private ParticleSystem deathParticlePrefab; // Reference to the death particle prefab
     [SerializeField] private ParticleSystem damageParticlePrefab; // Reference to the death particle prefab
@@ -72,6 +71,16 @@ public class Player : MonoBehaviour
         isInvincible = true;
         yield return new WaitForSeconds(duration);
         isInvincible = false;
+
+    }
+
+    private IEnumerator EnableCanvasAfterFrames(int frameCount)
+    {
+        for (int i = 0; i < frameCount; i++)
+        {
+            yield return null; // wait for one frame
+        }
+        deathScene.enabled = true;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -97,8 +106,8 @@ public class Player : MonoBehaviour
 
                 // Destroy the player
                 Destroy(gameObject);
-                deathScene.enabled = true;
-                Time.timeScale = 0f;
+                StartCoroutine(EnableCanvasAfterFrames(200)); // Enable the canvas after 5 frames
+                
                 Debug.Log("Test");
             }
             if (hp == 2)
@@ -113,8 +122,6 @@ public class Player : MonoBehaviour
                 hp = 1;
             }
 
-        }else if (other.CompareTag("enemyHead")){
-            killSound.Play();
         }
     }
 }

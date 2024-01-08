@@ -2,6 +2,7 @@
 
 public class Jump : MonoBehaviour
 {
+    [SerializeField] AudioSource killSound;
     [SerializeField] AudioSource jumpSound;
     Rigidbody rigidbody;
     public float jumpStrength = 2.6f;
@@ -28,9 +29,16 @@ public class Jump : MonoBehaviour
         // Jump when the Jump button is pressed and we are on the ground.
         if (Input.GetKeyDown("w") && (!groundCheck || groundCheck.isGrounded))
         {
+            Debug.Log("can jump");
             rigidbody.AddForce(Vector3.up * 100 * jumpStrength);
             Jumped?.Invoke();
             jumpSound.Play();
         }
+    }
+    public void WhenEnemyHeadCheckerTriggerEnter(Collider collider)
+    {
+        Debug.Log("trigger on jump entered");
+        killSound.Play();
+        rigidbody.AddForce(Vector3.up * 100 * 2.5f);
     }
 }
