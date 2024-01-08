@@ -9,7 +9,7 @@ public class DeathScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("headChecker"))
         {
             // Instantiate the death particle at the enemy's position and rotation
             ParticleSystem deathParticle = Instantiate(deathParticlePrefab, enemy.transform.position, enemy.transform.rotation);
@@ -18,7 +18,7 @@ public class DeathScript : MonoBehaviour
 
             // Destroy the enemy
             Destroy(enemy);
-
+                
             // Destroy the particle system after it has finished playing
             Destroy(deathParticle.gameObject, deathParticle.main.duration);
         }

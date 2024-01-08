@@ -8,6 +8,12 @@ public class Player : MonoBehaviour
     public float speed = 5;
     private int hp;
     bool facingRight = true; // Assuming the player starts facing right
+    [SerializeField] MeshRenderer cylinder;
+    [SerializeField] MeshRenderer chamferbox;
+    [SerializeField] MeshRenderer helix;
+    [SerializeField] MeshRenderer cylinder007;
+    [SerializeField] AudioSource dmgTaken;
+    [SerializeField] AudioSource deathSound;
     [SerializeField] Canvas deathScene;
     [SerializeField] private ParticleSystem deathParticlePrefab; // Reference to the death particle prefab
     [SerializeField] private ParticleSystem damageParticlePrefab; // Reference to the death particle prefab
@@ -81,6 +87,7 @@ public class Player : MonoBehaviour
             yield return null; // wait for one frame
         }
         deathScene.enabled = true;
+        Time.timeScale = 0f;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -91,6 +98,7 @@ public class Player : MonoBehaviour
 
             if (hp == 1)
             {
+                deathSound.Play();
                 // Instantiate the death particle at the player's position and rotation
                 ParticleSystem deathParticle = Instantiate(deathParticlePrefab, transform.position, transform.rotation);
 
@@ -104,9 +112,12 @@ public class Player : MonoBehaviour
                 // Destroy the particle system after it has finished playing
                 Destroy(deathParticle.gameObject, deathParticle.main.duration);
 
-                // Destroy the player
-                Destroy(gameObject);
-                StartCoroutine(EnableCanvasAfterFrames(200)); // Enable the canvas after 5 frames
+                //     Destroy the player
+                cylinder.enabled = false;
+                chamferbox.enabled = false;
+                helix.enabled = false;
+                cylinder007.enabled = false;
+                StartCoroutine(EnableCanvasAfterFrames(60)); // Enable the canvas after 5 frames
                 
                 Debug.Log("Test");
             }
@@ -116,9 +127,12 @@ public class Player : MonoBehaviour
                 ParticleSystem damageParticle = Instantiate(damageParticlePrefab, transform.position, transform.rotation);
                 // Attach the damage particle to the player
                 damageParticle.transform.parent = transform;
-
+                float bounceForce = 30f; // Adjust this value to change the strength of the bounce
+                Vector3 bounceDirection = facingRight ? Vector3.left : Vector3.right;
+                rigidbody.AddForce(bounceDirection * bounceForce, ForceMode.Impulse);
                 // Start playing the damage particle
                 damageParticle.Play();
+                dmgTaken.Play();
                 hp = 1;
             }
 

@@ -39,6 +39,6 @@ public class Jump : MonoBehaviour
     {
         Debug.Log("trigger on jump entered");
         killSound.Play();
-        rigidbody.AddForce(Vector3.up * 100 * 2.5f);
+        rigidbody.AddForce(Vector3.up * 100 * 3f);
     }
 }
