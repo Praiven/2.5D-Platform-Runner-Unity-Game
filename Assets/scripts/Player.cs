@@ -6,7 +6,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public float speed = 5;
-    private int hp;
+    public int hp;
     bool facingRight = true; // Assuming the player starts facing right
     [SerializeField] MeshRenderer cylinder;
     [SerializeField] MeshRenderer chamferbox;
@@ -22,12 +22,18 @@ public class Player : MonoBehaviour
     Rigidbody rigidbody;
     /// <summary> Functions to override movement speed. Will use the last added override. </summary>
     public List<System.Func<float>> speedOverrides = new List<System.Func<float>>();
+    ParticleSystem damageParticle;
 
 
     void Start()
     {
         deathScene.enabled = false;
         hp = 2;
+        // Instantiate the damage particle at the player's position and rotation
+        damageParticle = Instantiate(damageParticlePrefab, transform.position, transform.rotation);
+        // Attach the damage particle to the player
+        damageParticle.transform.parent = transform;
+        damageParticle.Stop();
     }
     void Awake()
     {
@@ -70,6 +76,19 @@ public class Player : MonoBehaviour
             facingRight = false;
             transform.Rotate(0, 180, 0); // Rotate 180 degrees around the Y-axis
         }
+    }
+
+    public void SmokeDisabler()
+    {
+        if (hp ==2) 
+        {
+            damageParticle.Stop();
+        }
+        else if (hp ==1)
+        {
+            damageParticle.Play();
+        }
+
     }
 
     private IEnumerator Invincibility(float duration)
@@ -118,22 +137,16 @@ public class Player : MonoBehaviour
                 helix.enabled = false;
                 cylinder007.enabled = false;
                 StartCoroutine(EnableCanvasAfterFrames(60)); // Enable the canvas after 5 frames
-                
-                Debug.Log("Test");
             }
             if (hp == 2)
             {
-                // Instantiate the damage particle at the player's position and rotation
-                ParticleSystem damageParticle = Instantiate(damageParticlePrefab, transform.position, transform.rotation);
-                // Attach the damage particle to the player
-                damageParticle.transform.parent = transform;
                 float bounceForce = 30f; // Adjust this value to change the strength of the bounce
                 Vector3 bounceDirection = facingRight ? Vector3.left : Vector3.right;
                 rigidbody.AddForce(bounceDirection * bounceForce, ForceMode.Impulse);
                 // Start playing the damage particle
-                damageParticle.Play();
                 dmgTaken.Play();
                 hp = 1;
+                SmokeDisabler();
             }
 
         }

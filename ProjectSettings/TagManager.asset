@@ -8,6 +8,7 @@ TagManager:
   - DeathCanvas
   - enemyHead
   - headChecker
+  - Health
   layers:
   - Default
   - TransparentFX
