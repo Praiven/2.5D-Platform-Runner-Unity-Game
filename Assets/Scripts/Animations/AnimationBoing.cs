@@ -25,6 +25,7 @@ public class AnimationBoing : MonoBehaviour
         bool leftPressed = Input.GetKey("a");
         bool jumpPressed = Input.GetKeyDown("w");
 
+
         if (rightPressed && !leftPressed)
         {
             isMovingRight = true;

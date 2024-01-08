@@ -13,7 +13,6 @@ public class DeathScript : MonoBehaviour
         {
             // Instantiate the death particle at the enemy's position and rotation
             ParticleSystem deathParticle = Instantiate(deathParticlePrefab, enemy.transform.position, enemy.transform.rotation);
-
             // Play the particle system once
             deathParticle.Play();
 
