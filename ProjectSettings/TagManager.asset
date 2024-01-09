@@ -12,6 +12,7 @@ TagManager:
   - Shield
   - Barrier
   - Speed
+  - Jump
   layers:
   - Default
   - TransparentFX

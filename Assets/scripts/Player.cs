@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     [SerializeField] AudioSource dmgTaken;
     [SerializeField] AudioSource deathSound;
     [SerializeField] AudioSource powerUpEffect;
+    [SerializeField] AudioSource moveSound;
     [SerializeField] Canvas deathScene;
     [SerializeField] private ParticleSystem deathParticlePrefab; // Reference to the death particle prefab
     [SerializeField] private ParticleSystem damageParticlePrefab; // Reference to the death particle prefab
@@ -47,6 +48,18 @@ public class Player : MonoBehaviour
     private void Update()
     {
         HandlePlayerRotation();
+
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+        {
+            if (!moveSound.isPlaying)
+            {
+                moveSound.Play();
+            }
+        }
+        else if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+        {
+            moveSound.Stop();
+        }
     }
 
     private IEnumerator Invincibility(float duration)
@@ -82,6 +95,7 @@ public class Player : MonoBehaviour
             }
             if (shield)
             {
+                dmgTaken.Play();
                 shield = false;
                 Color newColor = new Color(255f / 255f, 255f / 255f, 255f / 255f, 1); // Set this to the color you want 
                 Transform childTransform = transform.Find("Cylinder006/ChamferBox001");
@@ -92,10 +106,12 @@ public class Player : MonoBehaviour
                 rigidbody.AddForce(bounceDirection * bounceForce, ForceMode.Impulse);
                 hp = 2;
             }
-            if (speed == 5)
+            if (speed != 3)
             {
+                dmgTaken.Play();
                 speed = 3;
             }
+            dmgTaken.Play();
             GetComponent<Jump>().DisableDoubleJump();
         }
         else if (other.CompareTag("Barrier"))

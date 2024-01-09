@@ -27,7 +27,7 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player"))
+        if (!other.CompareTag("Player") && !other.CompareTag("Health") && !other.CompareTag("Speed") && !other.CompareTag("Shield") && !other.CompareTag("Jump"))
         {
             movingRight = !movingRight;
             if (movingRight)
