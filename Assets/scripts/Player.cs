@@ -80,11 +80,16 @@ public class Player : MonoBehaviour
             {
                 HandlePlayerDamage();
             }
-
-        }else if (other.CompareTag("Health"))
+        }
+        else if (other.CompareTag("Barrier")) 
+        {
+            HandlePlayerDeath();
+        }
+        else if (other.CompareTag("Health"))
         {
             powerUpEffect.Play();
         }
+
     }
     private void  HandlePlayerDamage()
     {
