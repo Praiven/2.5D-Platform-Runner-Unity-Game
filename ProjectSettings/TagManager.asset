@@ -10,6 +10,7 @@ TagManager:
   - headChecker
   - Health
   - Shield
+  - Barrier
   layers:
   - Default
   - TransparentFX
