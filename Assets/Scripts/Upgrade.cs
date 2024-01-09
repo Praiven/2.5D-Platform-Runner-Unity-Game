@@ -16,12 +16,13 @@ public class Upgrade : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (gameObject.CompareTag("Health"))
+            if (gameObject.CompareTag("Health")) // the tag of the current power up
             {
                 player.hp = 2;    
                 Debug.Log(player.hp);
                 player.SmokeDisabler();
             }
+            Destroy(gameObject);
         }
     }
 }

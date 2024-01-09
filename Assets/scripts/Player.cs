@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.ReorderableList;
 using UnityEngine;
@@ -14,6 +15,7 @@ public class Player : MonoBehaviour
     [SerializeField] MeshRenderer cylinder007;
     [SerializeField] AudioSource dmgTaken;
     [SerializeField] AudioSource deathSound;
+    [SerializeField] AudioSource powerUpEffect;
     [SerializeField] Canvas deathScene;
     [SerializeField] private ParticleSystem deathParticlePrefab; // Reference to the death particle prefab
     [SerializeField] private ParticleSystem damageParticlePrefab; // Reference to the death particle prefab
@@ -28,12 +30,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         deathScene.enabled = false;
-        hp = 2;
-        // Instantiate the damage particle at the player's position and rotation
-        damageParticle = Instantiate(damageParticlePrefab, transform.position, transform.rotation);
-        // Attach the damage particle to the player
-        damageParticle.transform.parent = transform;
-        damageParticle.Stop();
+        InitializePlayer();
     }
     void Awake()
     {
@@ -43,52 +40,12 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        // Get targetMovingSpeed.
-        float targetMovingSpeed = speed;
-        if (speedOverrides.Count > 0)
-        {
-            targetMovingSpeed = speedOverrides.Count - 1;
-        }
-
-        // Get targetVelocity from input.
-        Vector2 targetVelocity = new Vector2(0, -Input.GetAxis("Horizontal") * targetMovingSpeed);
-
-        // Apply movement.
-        if (facingRight)
-        {
-            rigidbody.velocity = transform.rotation * new Vector3(targetVelocity.y, rigidbody.velocity.y, targetVelocity.x);
-        }
-        else
-        {
-            rigidbody.velocity = transform.rotation * new Vector3(-targetVelocity.y, rigidbody.velocity.y, -targetVelocity.x);
-        }
+        MovePlayer();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.D) && !facingRight)
-        {
-            facingRight = true;
-            transform.Rotate(0, 180, 0); // Rotate 180 degrees around the Y-axis
-        }
-        else if (Input.GetKeyDown(KeyCode.A) && facingRight)
-        {
-            facingRight = false;
-            transform.Rotate(0, 180, 0); // Rotate 180 degrees around the Y-axis
-        }
-    }
-
-    public void SmokeDisabler()
-    {
-        if (hp ==2) 
-        {
-            damageParticle.Stop();
-        }
-        else if (hp ==1)
-        {
-            damageParticle.Play();
-        }
-
+        HandlePlayerRotation();
     }
 
     private IEnumerator Invincibility(float duration)
@@ -117,38 +74,110 @@ public class Player : MonoBehaviour
 
             if (hp == 1)
             {
-                deathSound.Play();
-                // Instantiate the death particle at the player's position and rotation
-                ParticleSystem deathParticle = Instantiate(deathParticlePrefab, transform.position, transform.rotation);
-
-                // Play the particle system once
-                deathParticle.Play();
-
-                // Disable emission of the particle system
-                var emission = deathParticle.emission;
-                emission.enabled = false;
-
-                // Destroy the particle system after it has finished playing
-                Destroy(deathParticle.gameObject, deathParticle.main.duration);
-
-                //     Destroy the player
-                cylinder.enabled = false;
-                chamferbox.enabled = false;
-                helix.enabled = false;
-                cylinder007.enabled = false;
-                StartCoroutine(EnableCanvasAfterFrames(60)); // Enable the canvas after 5 frames
+                HandlePlayerDeath();
             }
             if (hp == 2)
             {
-                float bounceForce = 30f; // Adjust this value to change the strength of the bounce
-                Vector3 bounceDirection = facingRight ? Vector3.left : Vector3.right;
-                rigidbody.AddForce(bounceDirection * bounceForce, ForceMode.Impulse);
-                // Start playing the damage particle
-                dmgTaken.Play();
-                hp = 1;
-                SmokeDisabler();
+                HandlePlayerDamage();
             }
 
+        }else if (other.CompareTag("Health"))
+        {
+            powerUpEffect.Play();
         }
+    }
+    private void  HandlePlayerDamage()
+    {
+        float bounceForce = 30f; // Adjust this value to change the strength of the bounce
+        Vector3 bounceDirection = facingRight ? Vector3.left : Vector3.right;
+        rigidbody.AddForce(bounceDirection * bounceForce, ForceMode.Impulse);
+        // Start playing the damage particle
+        dmgTaken.Play();
+        hp = 1;
+        SmokeDisabler();
+    }
+
+    private void InitializePlayer()
+    {
+        hp = 2;
+        // Instantiate the damage particle at the player's position and rotation
+        damageParticle = Instantiate(damageParticlePrefab, transform.position, transform.rotation);
+        // Attach the damage particle to the player
+        damageParticle.transform.parent = transform;
+        damageParticle.Stop();
+    }
+
+    public void SmokeDisabler()
+    {
+        if (hp == 2)
+        {
+            damageParticle.Stop();
+        }
+        else if (hp == 1)
+        {
+            damageParticle.Play();
+        }
+
+    }
+
+    private void HandlePlayerRotation()
+    {
+        if (Input.GetKeyDown(KeyCode.D) && !facingRight)
+        {
+            facingRight = true;
+            transform.Rotate(0, 180, 0); // Rotate 180 degrees around the Y-axis
+        }
+        else if (Input.GetKeyDown(KeyCode.A) && facingRight)
+        {
+            facingRight = false;
+            transform.Rotate(0, 180, 0); // Rotate 180 degrees around the Y-axis
+        }
+    }
+
+    private void MovePlayer()
+    {
+        // Get targetMovingSpeed.
+        float targetMovingSpeed = speed;
+        if (speedOverrides.Count > 0)
+        {
+            targetMovingSpeed = speedOverrides.Count - 1;
+        }
+
+        // Get targetVelocity from input.
+        Vector2 targetVelocity = new Vector2(0, -Input.GetAxis("Horizontal") * targetMovingSpeed);
+
+        // Apply movement.
+        if (facingRight)
+        {
+            rigidbody.velocity = transform.rotation * new Vector3(targetVelocity.y, rigidbody.velocity.y, targetVelocity.x);
+        }
+        else
+        {
+            rigidbody.velocity = transform.rotation * new Vector3(-targetVelocity.y, rigidbody.velocity.y, -targetVelocity.x);
+        }
+    }
+
+    private void HandlePlayerDeath()
+    {
+        deathSound.Play();
+        // Instantiate the death particle at the player's position and rotation
+        ParticleSystem deathParticle = Instantiate(deathParticlePrefab, transform.position, transform.rotation);
+
+        // Play the particle system once
+        deathParticle.Play();
+
+        // Disable emission of the particle system
+        var emission = deathParticle.emission;
+        emission.enabled = false;
+
+        // Destroy the particle system after it has finished playing
+        Destroy(deathParticle.gameObject, deathParticle.main.duration);
+
+        //     Destroy the player
+        cylinder.enabled = false;
+        chamferbox.enabled = false;
+        helix.enabled = false;
+        cylinder007.enabled = false;
+        StartCoroutine(EnableCanvasAfterFrames(60)); // Enable the canvas after 5 frames
     }
 }
