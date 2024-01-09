@@ -71,7 +71,6 @@ public class Player : MonoBehaviour
     {
         if (other.CompareTag("Enemy") && !isInvincible)
         {
-            Debug.Log("Touch grass");
             StartCoroutine(Invincibility(1f)); // Make the player invincible for 1 second
             if (hp == 1)
             {
@@ -93,6 +92,11 @@ public class Player : MonoBehaviour
                 rigidbody.AddForce(bounceDirection * bounceForce, ForceMode.Impulse);
                 hp = 2;
             }
+            if (speed == 5)
+            {
+                speed = 3;
+            }
+            GetComponent<Jump>().DisableDoubleJump();
         }
         else if (other.CompareTag("Barrier"))
         {
@@ -104,8 +108,17 @@ public class Player : MonoBehaviour
         }
         else if (other.CompareTag("Shield"))
         {
+            powerUpEffect.Play();
             Shield();
             shield = true;
+        }
+        else if (other.CompareTag("Speed"))
+        {
+            powerUpEffect.Play();
+        }
+        else if (other.CompareTag("Jump"))
+        {
+            powerUpEffect.Play();
         }
     }
 

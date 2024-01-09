@@ -10,7 +10,8 @@ public class Jump : MonoBehaviour
 
     [SerializeField, Tooltip("Prevents jumping when the transform is in mid-air.")]
     GroundCheck groundCheck;
-
+    bool doubleJump = false;
+    int currentJumps = 0;
 
     void Reset()
     {
@@ -26,19 +27,38 @@ public class Jump : MonoBehaviour
 
     void LateUpdate()
     {
-        // Jump when the Jump button is pressed and we are on the ground.
-        if (Input.GetKeyDown("w") && (!groundCheck || groundCheck.isGrounded))
+        // Jump when the Jump button is pressed and we haven't reached the max jump count.
+        if (Input.GetKeyDown("w") && (!groundCheck || groundCheck.isGrounded || (doubleJump && currentJumps<1)))
         {
-            Debug.Log("can jump");
             rigidbody.AddForce(Vector3.up * 100 * jumpStrength);
             Jumped?.Invoke();
             jumpSound.Play();
+            currentJumps++;
+
+
         }
+        if (groundCheck.isGrounded)
+        {
+            currentJumps = 0;
+        }
+
     }
+
     public void WhenEnemyHeadCheckerTriggerEnter(Collider collider)
     {
-        Debug.Log("trigger on jump entered");
         killSound.Play();
         rigidbody.AddForce(Vector3.up * 100 * 3f);
+    }
+
+
+
+    public void EnableDoubleJump()
+    {
+       doubleJump = true; // Enable double jump
+    }
+
+    public void DisableDoubleJump()
+    {
+        doubleJump = false; // Disable double jump
     }
 }
