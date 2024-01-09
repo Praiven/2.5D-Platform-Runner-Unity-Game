@@ -28,20 +28,73 @@ public class Player : MonoBehaviour
     void Start()
     {
         deathScene.enabled = false;
+<<<<<<< Updated upstream
         hp = 2;
         // Instantiate the damage particle at the player's position and rotation
         damageParticle = Instantiate(damageParticlePrefab, transform.position, transform.rotation);
         // Attach the damage particle to the player
         damageParticle.transform.parent = transform;
         damageParticle.Stop();
+=======
+        InitializePlayer();
+>>>>>>> Stashed changes
     }
+
     void Awake()
     {
-        // Get the rigidbody on this.
         rigidbody = GetComponent<Rigidbody>();
     }
 
     void FixedUpdate()
+    {
+        MovePlayer(); //function that handles the movement of the player
+    }
+
+    private void Update()
+    {
+        HandlePlayerRotation(); //function that handles the rotation of the player and where he is facing when we press A or D
+    }
+
+    private IEnumerator Invincibility(float duration)
+    {
+        isInvincible = true;
+        yield return new WaitForSeconds(duration);
+        isInvincible = false;
+    }
+
+    private IEnumerator EnableCanvasAfterFrames(int frameCount) // delays the death canvas scene so that the animation plays
+    {
+        for (int i = 0; i < frameCount; i++)
+        {
+            yield return null; // wait for one frame
+        }
+        deathScene.enabled = true;
+        Time.timeScale = 0f;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy") && !isInvincible) // if the enemy hits the player
+        {
+            StartCoroutine(Invincibility(1f)); // Make the player invincible for 1 second
+
+            if (hp == 1)
+            {
+                HandlePlayerDeath(); //function that handles the death logic
+            }
+            if (hp == 2)
+            {
+                HandlePlayerDamage(); //function that handles the damage logic
+            }
+        }
+    }
+
+    private void InitializePlayer()
+    {
+        hp = 2;
+    }
+
+    private void MovePlayer()
     {
         // Get targetMovingSpeed.
         float targetMovingSpeed = speed;
@@ -64,7 +117,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void HandlePlayerRotation()
     {
         if (Input.GetKeyDown(KeyCode.D) && !facingRight)
         {
@@ -78,6 +131,7 @@ public class Player : MonoBehaviour
         }
     }
 
+<<<<<<< Updated upstream
     public void SmokeDisabler()
     {
         if (hp ==2) 
@@ -92,25 +146,49 @@ public class Player : MonoBehaviour
     }
 
     private IEnumerator Invincibility(float duration)
+=======
+    private void HandlePlayerDeath()
+>>>>>>> Stashed changes
     {
-        isInvincible = true;
-        yield return new WaitForSeconds(duration);
-        isInvincible = false;
+        deathSound.Play();
+        // Instantiate the death particle at the player's position and rotation
+        ParticleSystem deathParticle = Instantiate(deathParticlePrefab, transform.position, transform.rotation);
 
+        // Play the particle system once
+        deathParticle.Play();
+
+        // Disable emission of the particle system
+        var emission = deathParticle.emission;
+        emission.enabled = false;
+
+        // Destroy the particle system after it has finished playing
+        Destroy(deathParticle.gameObject, deathParticle.main.duration);
+
+        // Destroy the player by disabling his mesh rendered parts
+        OnDisablePlayer();
+
+        StartCoroutine(EnableCanvasAfterFrames(60)); // Enable the canvas after 5 frames
     }
 
-    private IEnumerator EnableCanvasAfterFrames(int frameCount)
+    private void HandlePlayerDamage()
     {
-        for (int i = 0; i < frameCount; i++)
-        {
-            yield return null; // wait for one frame
-        }
-        deathScene.enabled = true;
-        Time.timeScale = 0f;
+        // Instantiate the damage particle at the player's position and rotation
+        ParticleSystem damageParticle = Instantiate(damageParticlePrefab, transform.position, transform.rotation);
+        // Attach the damage particle to the player
+        damageParticle.transform.parent = transform;
+        // player bounces back when enemy hits him
+        float bounceForce = 40f; 
+        Vector3 bounceDirection = facingRight ? Vector3.left : Vector3.right;
+        rigidbody.AddForce(bounceDirection * bounceForce, ForceMode.Impulse);
+        // Start playing the damage particle
+        damageParticle.Play();
+        dmgTaken.Play();
+        hp = 1;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnDisablePlayer()
     {
+<<<<<<< Updated upstream
         if (other.CompareTag("Enemy") && !isInvincible)
         {
             StartCoroutine(Invincibility(1f)); // Make the player invincible for 1 second
@@ -150,5 +228,11 @@ public class Player : MonoBehaviour
             }
 
         }
+=======
+        cylinder.enabled = false;
+        chamferbox.enabled = false;
+        helix.enabled = false;
+        cylinder007.enabled = false;
+>>>>>>> Stashed changes
     }
 }
