@@ -11,6 +11,7 @@ TagManager:
   - Health
   - Shield
   - Barrier
+  - Speed
   layers:
   - Default
   - TransparentFX
