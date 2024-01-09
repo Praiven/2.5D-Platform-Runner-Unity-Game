@@ -81,7 +81,7 @@ public class Player : MonoBehaviour
                 HandlePlayerDamage();
             }
         }
-        else if (other.CompareTag("Barrier")) 
+        else if (other.CompareTag("Barrier"))
         {
             HandlePlayerDeath();
         }
@@ -89,8 +89,20 @@ public class Player : MonoBehaviour
         {
             powerUpEffect.Play();
         }
-
+        else if (other.CompareTag("Shield"))
+        {
+            Shield();
+        }
     }
+
+    private void Shield()
+    {
+        Color newColor = new Color(255f / 255f, 122f / 255f, 0f / 255f, 1); // Set this to the color you want 
+        Transform childTransform = transform.Find("Cylinder006/ChamferBox001");
+        Renderer childRenderer = childTransform.GetComponent<Renderer>();
+        childRenderer.material.color = newColor;
+    }
+ 
     private void  HandlePlayerDamage()
     {
         float bounceForce = 30f; // Adjust this value to change the strength of the bounce
