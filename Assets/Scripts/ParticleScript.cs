@@ -1,10 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ParticleScript : MonoBehaviour
 {
     public ParticleSystem particleSystem;
+    public Collider fireCollider; // Add this line
 
     private void Start()
     {
@@ -16,8 +16,10 @@ public class ParticleScript : MonoBehaviour
         while (true)
         {
             particleSystem.Play();
+            fireCollider.enabled = true; // Enable the collider
             yield return new WaitForSeconds(4);
             particleSystem.Stop();
+            fireCollider.enabled = false; // Disable the collider
             yield return new WaitForSeconds(3);
         }
     }

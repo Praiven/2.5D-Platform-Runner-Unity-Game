@@ -7,6 +7,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public float speed = 5;
+    private bool shield;
     public int hp;
     bool facingRight = true; // Assuming the player starts facing right
     [SerializeField] MeshRenderer cylinder;
@@ -70,8 +71,8 @@ public class Player : MonoBehaviour
     {
         if (other.CompareTag("Enemy") && !isInvincible)
         {
+            Debug.Log("Touch grass");
             StartCoroutine(Invincibility(1f)); // Make the player invincible for 1 second
-
             if (hp == 1)
             {
                 HandlePlayerDeath();
@@ -79,6 +80,18 @@ public class Player : MonoBehaviour
             if (hp == 2)
             {
                 HandlePlayerDamage();
+            }
+            if (shield)
+            {
+                shield = false;
+                Color newColor = new Color(255f / 255f, 255f / 255f, 255f / 255f, 1); // Set this to the color you want 
+                Transform childTransform = transform.Find("Cylinder006/ChamferBox001");
+                Renderer childRenderer = childTransform.GetComponent<Renderer>();
+                childRenderer.material.color = newColor;
+                float bounceForce = 30f; // Adjust this value to change the strength of the bounce
+                Vector3 bounceDirection = facingRight ? Vector3.left : Vector3.right;
+                rigidbody.AddForce(bounceDirection * bounceForce, ForceMode.Impulse);
+                hp = 2;
             }
         }
         else if (other.CompareTag("Barrier"))
@@ -92,6 +105,7 @@ public class Player : MonoBehaviour
         else if (other.CompareTag("Shield"))
         {
             Shield();
+            shield = true;
         }
     }
 
@@ -101,6 +115,7 @@ public class Player : MonoBehaviour
         Transform childTransform = transform.Find("Cylinder006/ChamferBox001");
         Renderer childRenderer = childTransform.GetComponent<Renderer>();
         childRenderer.material.color = newColor;
+        hp = 3; 
     }
  
     private void  HandlePlayerDamage()
@@ -117,8 +132,8 @@ public class Player : MonoBehaviour
     private void InitializePlayer()
     {
         hp = 2;
-        // Instantiate the damage particle at the player's position and rotation
-        damageParticle = Instantiate(damageParticlePrefab, transform.position, transform.rotation);
+        // Instantiate the damage particle at the player's position and 
+        damageParticle = Instantiate(damageParticlePrefab, transform.position , transform.rotation);
         // Attach the damage particle to the player
         damageParticle.transform.parent = transform;
         damageParticle.Stop();
