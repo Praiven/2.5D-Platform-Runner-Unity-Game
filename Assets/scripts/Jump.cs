@@ -47,7 +47,7 @@ public class Jump : MonoBehaviour
     public void WhenEnemyHeadCheckerTriggerEnter(Collider collider)
     {
         killSound.Play();
-        rigidbody.AddForce(Vector3.up * 100 * 3f);
+        rigidbody.AddForce(Vector3.up * 100 * 2f);
     }
 
 

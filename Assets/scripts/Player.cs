@@ -17,7 +17,6 @@ public class Player : MonoBehaviour
     [SerializeField] AudioSource dmgTaken;
     [SerializeField] AudioSource deathSound;
     [SerializeField] AudioSource powerUpEffect;
-    [SerializeField] AudioSource moveSound;
     [SerializeField] Canvas deathScene;
     [SerializeField] private ParticleSystem deathParticlePrefab; // Reference to the death particle prefab
     [SerializeField] private ParticleSystem damageParticlePrefab; // Reference to the death particle prefab
@@ -48,18 +47,6 @@ public class Player : MonoBehaviour
     private void Update()
     {
         HandlePlayerRotation();
-
-        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
-        {
-            if (!moveSound.isPlaying)
-            {
-                moveSound.Play();
-            }
-        }
-        else if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
-        {
-            moveSound.Stop();
-        }
     }
 
     private IEnumerator Invincibility(float duration)

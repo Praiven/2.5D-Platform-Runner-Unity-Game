@@ -22,6 +22,6 @@ public class MainSceneLoader : MonoBehaviour
         {
             Time.timeScale = 1f;
         }
-        SceneManager.LoadSceneAsync("MainScene");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
