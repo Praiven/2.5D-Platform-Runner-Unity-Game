@@ -9,23 +9,28 @@ public class Player : MonoBehaviour
     public float speed = 5;
     private bool shield;
     public int hp;
-    bool facingRight = true; // Assuming the player starts facing right
+    private bool facingRight = true; // Assuming the player starts facing right
+    private bool isInvincible = false; // Flag to check if the player is currently invincible
+
     [SerializeField] MeshRenderer cylinder;
     [SerializeField] MeshRenderer chamferbox;
     [SerializeField] MeshRenderer helix;
     [SerializeField] MeshRenderer cylinder007;
+
     [SerializeField] AudioSource dmgTaken;
     [SerializeField] AudioSource deathSound;
     [SerializeField] AudioSource powerUpEffect;
+
     [SerializeField] Canvas deathScene;
+
     [SerializeField] private ParticleSystem deathParticlePrefab; // Reference to the death particle prefab
     [SerializeField] private ParticleSystem damageParticlePrefab; // Reference to the death particle prefab
-    private bool isInvincible = false; // Flag to check if the player is currently invincible
-    //[SerializeField] private GameObject spawnEffectPrefab; // Reference to the spawn effect prefab
-    Rigidbody rigidbody;
+    ParticleSystem damageParticle;
+
+    Rigidbody rigidBody;
+
     /// <summary> Functions to override movement speed. Will use the last added override. </summary>
     public List<System.Func<float>> speedOverrides = new List<System.Func<float>>();
-    ParticleSystem damageParticle;
 
 
     void Start()
@@ -33,10 +38,11 @@ public class Player : MonoBehaviour
         deathScene.enabled = false;
         InitializePlayer();
     }
+
     void Awake()
     {
         // Get the rigidbody on this.
-        rigidbody = GetComponent<Rigidbody>();
+        rigidBody = GetComponent<Rigidbody>();
     }
 
     void FixedUpdate()
@@ -49,7 +55,7 @@ public class Player : MonoBehaviour
         HandlePlayerRotation();
     }
 
-    private IEnumerator Invincibility(float duration)
+    private IEnumerator Invincibility(float duration)  // Function that makes the player invincible for a short duration, in order not to cause an immediate death
     {
         isInvincible = true;
         yield return new WaitForSeconds(duration);
@@ -87,7 +93,7 @@ public class Player : MonoBehaviour
                 childRenderer.material.color = newColor;
                 float bounceForce = 30f; // Adjust this value to change the strength of the bounce
                 Vector3 bounceDirection = facingRight ? Vector3.left : Vector3.right;
-                rigidbody.AddForce(bounceDirection * bounceForce, ForceMode.Impulse);
+                rigidBody.AddForce(bounceDirection * bounceForce, ForceMode.Impulse);
                 hp = 2;
             }
             if (speed != 3)
@@ -95,8 +101,12 @@ public class Player : MonoBehaviour
                 dmgTaken.Play();
                 speed = 3;
             }
-            dmgTaken.Play();
-            GetComponent<Jump>().DisableDoubleJump();
+            if (GetComponent<Jump>().jumpStrength != 2.6f)
+            {
+                dmgTaken.Play();
+                GetComponent<Jump>().jumpStrength = 2.6f;
+            }
+
         }
         else if (other.CompareTag("Barrier"))
         {
@@ -135,7 +145,7 @@ public class Player : MonoBehaviour
     {
         float bounceForce = 30f; // Adjust this value to change the strength of the bounce
         Vector3 bounceDirection = facingRight ? Vector3.left : Vector3.right;
-        rigidbody.AddForce(bounceDirection * bounceForce, ForceMode.Impulse);
+        rigidBody.AddForce(bounceDirection * bounceForce, ForceMode.Impulse);
         // Start playing the damage particle
         dmgTaken.Play();
         hp = 1;
@@ -194,11 +204,11 @@ public class Player : MonoBehaviour
         // Apply movement.
         if (facingRight)
         {
-            rigidbody.velocity = transform.rotation * new Vector3(targetVelocity.y, rigidbody.velocity.y, targetVelocity.x);
+            rigidBody.velocity = transform.rotation * new Vector3(targetVelocity.y, rigidBody.velocity.y, targetVelocity.x);
         }
         else
         {
-            rigidbody.velocity = transform.rotation * new Vector3(-targetVelocity.y, rigidbody.velocity.y, -targetVelocity.x);
+            rigidBody.velocity = transform.rotation * new Vector3(-targetVelocity.y, rigidBody.velocity.y, -targetVelocity.x);
         }
     }
 
@@ -218,7 +228,7 @@ public class Player : MonoBehaviour
         // Destroy the particle system after it has finished playing
         Destroy(deathParticle.gameObject, deathParticle.main.duration);
 
-        //     Destroy the player
+        // Destroy the player
         cylinder.enabled = false;
         chamferbox.enabled = false;
         helix.enabled = false;

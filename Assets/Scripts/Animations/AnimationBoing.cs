@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimationBoing : MonoBehaviour
+public class AnimationBoing : MonoBehaviour  // This script handles the animation of the player gameObject 
 {
     Animator animator;
     public bool rightPressed;
@@ -15,7 +15,7 @@ public class AnimationBoing : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();    // Get the current animator of the object 
     }
 
     // Update is called once per frame
@@ -50,7 +50,8 @@ public class AnimationBoing : MonoBehaviour
         {
             isJumping = false;
         }
-        animator.SetBool("RightPressed", isMovingRight);
+        // Changes the boolean value in the animator 
+        animator.SetBool("RightPressed", isMovingRight);      
         animator.SetBool("LeftPressed", isMovingLeft);
         animator.SetBool("JumpPressed", isJumping);
     }

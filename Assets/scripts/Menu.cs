@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Menu : MonoBehaviour
+public class Menu : MonoBehaviour     // This script navigates the user in the starting menu of the game 
 {
     public void PlayGame()
     {

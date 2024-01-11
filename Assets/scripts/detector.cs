@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Collider))]
-public class Detector : MonoBehaviour
+public class Detector : MonoBehaviour  // This script activates a trigger if the player is touching the had of the enemy - and thus must kill him 
 {
     public UnityEvent<Collider> onTriggerEnter;
     public UnityEvent<Collider> onTriggerStay;

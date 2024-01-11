@@ -3,25 +3,25 @@ using UnityEngine;
 
 public class ParticleScript : MonoBehaviour
 {
-    public ParticleSystem particleSystem;
-    public Collider fireCollider; // Add this line
-    public AudioSource audioSource; // Add this line for the audio source
-    public AudioClip audioClip; // Add this line for the audio clip
+    public ParticleSystem particle;     // Variables that define the Particle 
+    public Collider fireCollider; 
+    public AudioSource audioSource; 
+    public AudioClip audioClip; 
 
     private void Start()
     {
         StartCoroutine(EmitParticles());
     }
 
-    IEnumerator EmitParticles()
+    IEnumerator EmitParticles()       // Function that controls when the particles are being emmited 
     {
         while (true)
         {
-            particleSystem.Play();
+            particle.Play();
             fireCollider.enabled = true; // Enable the collider
             audioSource.PlayOneShot(audioClip); // Play the audio clip
             yield return new WaitForSeconds(4);
-            particleSystem.Stop();
+            particle.Stop();
             fireCollider.enabled = false; // Disable the collider
             audioSource.Stop(); // Stop the audio
             yield return new WaitForSeconds(3);

@@ -4,29 +4,25 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    bool movingRight = false;
-    public float Speed = 1;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private bool movingRight = false;     // The enemy starts by looking towards the left
+    public float speed = 1;
 
     // Update is called once per frame
     void Update()
     {
-        if (movingRight)
+        if (movingRight)  // if the enemy is moving towards the right, continue to do so
         {
-            transform.position -= transform.right * Speed * Time.deltaTime;
+            transform.position -= transform.right * speed * Time.deltaTime;
         }
         else
         {
-            transform.position -= transform.right * Speed * Time.deltaTime;
+            transform.position -= transform.right * speed * Time.deltaTime;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        // If the enemy collides with a game object and is not any of the following, change direction
         if (!other.CompareTag("Player") && !other.CompareTag("Health") && !other.CompareTag("Speed") && !other.CompareTag("Shield") && !other.CompareTag("Jump"))
         {
             movingRight = !movingRight;
