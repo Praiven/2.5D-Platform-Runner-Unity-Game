@@ -57,12 +57,9 @@ public class Player : MonoBehaviour
 
     }
 
-    private IEnumerator EnableCanvasAfterFrames(int frameCount)
+    private IEnumerator EnableCanvasAfterTime(float duration)
     {
-        for (int i = 0; i < frameCount; i++)
-        {
-            yield return null; // wait for one frame
-        }
+        yield return new WaitForSeconds(duration);
         deathScene.enabled = true;
         Time.timeScale = 0f;
     }
@@ -226,6 +223,6 @@ public class Player : MonoBehaviour
         chamferbox.enabled = false;
         helix.enabled = false;
         cylinder007.enabled = false;
-        StartCoroutine(EnableCanvasAfterFrames(60)); // Enable the canvas after 5 frames
+        StartCoroutine(EnableCanvasAfterTime(0.7f)); // Enable the canvas after 5 frames
     }
 }
