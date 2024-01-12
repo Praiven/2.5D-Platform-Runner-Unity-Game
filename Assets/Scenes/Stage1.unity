@@ -25790,6 +25790,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   killSound: {fileID: 923312461}
   jumpSound: {fileID: 923312460}
+  groundCheck: {fileID: 3233958245549453636}
   jumpStrength: 2.6
 --- !u!114 &923312451
 MonoBehaviour:
@@ -27565,7 +27566,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.589, y: 1.697468, z: 18.732914}
+  m_LocalPosition: {x: 3.589, y: 1.631468, z: 18.732914}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -36311,7 +36312,7 @@ Transform:
   m_GameObject: {fileID: 1221411828}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.589, y: 1.697468, z: 18.732914}
+  m_LocalPosition: {x: 3.589, y: 1.631468, z: 18.732914}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -50329,7 +50330,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 422ca1815b24e884f8d78375dc7893d4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.649
+      value: 0.583
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 422ca1815b24e884f8d78375dc7893d4, type: 3}
       propertyPath: m_LocalPosition.z
@@ -60479,7 +60480,7 @@ Transform:
   m_GameObject: {fileID: 3274947806201521886}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
-  m_LocalPosition: {x: 0.229, y: -0.001, z: -0.00008583069}
+  m_LocalPosition: {x: 0.247, y: 0.005, z: -0.00008583069}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -60496,7 +60497,7 @@ GameObject:
   - component: {fileID: 3271703753946366496}
   - component: {fileID: 3233958245549453636}
   m_Layer: 0
-  m_Name: Ground Check
+  m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

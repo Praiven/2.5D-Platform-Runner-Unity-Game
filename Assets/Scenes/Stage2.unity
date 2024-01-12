@@ -2188,7 +2188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 603a526a9c495b34bb3c198c209a75a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 2
+  speed: 1
 --- !u!65 &121586455
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5206,11 +5206,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1634767862067424, guid: 007c57e2df8e9b144b99f471b84f3d56, type: 3}
   m_PrefabInstance: {fileID: 334818973}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &334818975 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 198637950067575458, guid: 007c57e2df8e9b144b99f471b84f3d56, type: 3}
-  m_PrefabInstance: {fileID: 334818973}
-  m_PrefabAsset: {fileID: 0}
 --- !u!82 &334818976
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5340,7 +5335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dffa316181a20045b5e0674ef661853, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleSystem: {fileID: 334818975}
+  particle: {fileID: 0}
   fireCollider: {fileID: 334818977}
   audioSource: {fileID: 334818976}
   audioClip: {fileID: 8300000, guid: 14f3cae45c1a8004599e977d59f1c469, type: 3}
@@ -6894,11 +6889,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1634767862067424, guid: 007c57e2df8e9b144b99f471b84f3d56, type: 3}
   m_PrefabInstance: {fileID: 423345628}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &423345630 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 198637950067575458, guid: 007c57e2df8e9b144b99f471b84f3d56, type: 3}
-  m_PrefabInstance: {fileID: 423345628}
-  m_PrefabAsset: {fileID: 0}
 --- !u!82 &423345631
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7028,7 +7018,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dffa316181a20045b5e0674ef661853, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleSystem: {fileID: 423345630}
+  particle: {fileID: 0}
   fireCollider: {fileID: 423345632}
   audioSource: {fileID: 423345631}
   audioClip: {fileID: 8300000, guid: 14f3cae45c1a8004599e977d59f1c469, type: 3}
@@ -8929,11 +8919,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1634767862067424, guid: 007c57e2df8e9b144b99f471b84f3d56, type: 3}
   m_PrefabInstance: {fileID: 570504620}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &570504622 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 198637950067575458, guid: 007c57e2df8e9b144b99f471b84f3d56, type: 3}
-  m_PrefabInstance: {fileID: 570504620}
-  m_PrefabAsset: {fileID: 0}
 --- !u!82 &570504623
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9063,7 +9048,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dffa316181a20045b5e0674ef661853, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleSystem: {fileID: 570504622}
+  particle: {fileID: 0}
   fireCollider: {fileID: 570504624}
   audioSource: {fileID: 570504623}
   audioClip: {fileID: 8300000, guid: 14f3cae45c1a8004599e977d59f1c469, type: 3}
@@ -18231,7 +18216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 603a526a9c495b34bb3c198c209a75a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 3
+  speed: 1
 --- !u!65 &1235729182
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19441,7 +19426,6 @@ MonoBehaviour:
   killSound: {fileID: 1289278252}
   jumpSound: {fileID: 1289278253}
   jumpStrength: 2.6
-  groundCheck: {fileID: 1554323328}
 --- !u!114 &1289278255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20657,7 +20641,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 603a526a9c495b34bb3c198c209a75a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 1
+  speed: 1
 --- !u!65 &1356994412
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20828,7 +20812,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0, g: 0.011809479, b: 0.8207547, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -21910,7 +21894,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 603a526a9c495b34bb3c198c209a75a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 2
+  speed: 1
 --- !u!65 &1397350785
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24097,11 +24081,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1634767862067424, guid: 007c57e2df8e9b144b99f471b84f3d56, type: 3}
   m_PrefabInstance: {fileID: 1532922838}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &1532922840 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 198637950067575458, guid: 007c57e2df8e9b144b99f471b84f3d56, type: 3}
-  m_PrefabInstance: {fileID: 1532922838}
-  m_PrefabAsset: {fileID: 0}
 --- !u!82 &1532922841
 AudioSource:
   m_ObjectHideFlags: 0
@@ -24231,7 +24210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dffa316181a20045b5e0674ef661853, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleSystem: {fileID: 1532922840}
+  particle: {fileID: 0}
   fireCollider: {fileID: 1532922842}
   audioSource: {fileID: 1532922841}
   audioClip: {fileID: 8300000, guid: 14f3cae45c1a8004599e977d59f1c469, type: 3}
@@ -25341,7 +25320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 603a526a9c495b34bb3c198c209a75a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 1
+  speed: 1
 --- !u!65 &1608214699
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26442,7 +26421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 603a526a9c495b34bb3c198c209a75a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 2
+  speed: 1
 --- !u!65 &1665622141
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -27552,7 +27531,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 603a526a9c495b34bb3c198c209a75a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 1
+  speed: 1
 --- !u!65 &1700693571
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -29375,7 +29354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 603a526a9c495b34bb3c198c209a75a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 1
+  speed: 1
 --- !u!65 &1872381691
 BoxCollider:
   m_ObjectHideFlags: 0

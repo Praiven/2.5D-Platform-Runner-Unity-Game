@@ -15,7 +15,7 @@ public class GroundCheck : MonoBehaviour
 
     const float OriginOffset = .001f;
     Vector3 RaycastOrigin => transform.position + Vector3.up * OriginOffset;
-    private float RaycastDistance => distanceThreshold + OriginOffset;
+    float RaycastDistance => distanceThreshold + OriginOffset;
 
 
     void LateUpdate()
