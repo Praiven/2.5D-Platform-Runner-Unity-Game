@@ -9,7 +9,7 @@ public class DeathScript : MonoBehaviour        // This script is a component of
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("headChecker"))      // Tag to identify that the player is above an enemy's head
+        if (other.CompareTag("Player"))      // Tag to identify that the player is above an enemy's head
         {
             // Instantiate the death particle at the enemy's position and rotation
             ParticleSystem deathParticle = Instantiate(deathParticlePrefab, enemy.transform.position, enemy.transform.rotation);

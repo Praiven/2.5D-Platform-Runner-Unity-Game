@@ -27,10 +27,8 @@ public class Jump : MonoBehaviour
             jumpSound.Play();
         }
     }
-
-    public void WhenEnemyHeadCheckerTriggerEnter(Collider collider)    // This function gets triggered from the Detector script when the player kills an enemy 
+    public void killJump() // this gets called from the player script when we kill an enemy
     {
-        killSound.Play();
         rigidBody.AddForce(Vector3.up * 100 * 2f);
     }
 }

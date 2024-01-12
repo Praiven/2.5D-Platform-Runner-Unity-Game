@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     [SerializeField] AudioSource dmgTaken;
     [SerializeField] AudioSource deathSound;
     [SerializeField] AudioSource powerUpEffect;
+    [SerializeField] AudioSource killSound;
 
     [SerializeField] Canvas deathScene;
 
@@ -72,6 +73,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+
         if (other.CompareTag("Enemy") && !isInvincible)
         {
             StartCoroutine(Invincibility(1f)); // Make the player invincible for 1 second
@@ -107,6 +109,11 @@ public class Player : MonoBehaviour
                 GetComponent<Jump>().jumpStrength = 2.6f;
             }
 
+        }
+        else if (other.CompareTag("enemyHead"))
+        {
+            killSound.Play();
+            GetComponent<Jump>().killJump();
         }
         else if (other.CompareTag("Barrier"))
         {
