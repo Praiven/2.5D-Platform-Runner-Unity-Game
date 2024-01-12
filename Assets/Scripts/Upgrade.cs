@@ -26,7 +26,7 @@ public class Upgrade : MonoBehaviour
             }
             else if (gameObject.CompareTag("Jump"))
             {
-                playerJump.jumpStrength = 3.1f; // Increase jump strength
+                playerJump.jumpStrength = 4f; // Increase jump strength
             }
             else if (gameObject.CompareTag("Speed"))
             {

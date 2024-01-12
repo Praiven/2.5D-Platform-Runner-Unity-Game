@@ -22,7 +22,6 @@ public class Jump : MonoBehaviour
         // Jump when the Jump button is pressed and we haven't reached the max jump count.
         if (Input.GetKeyDown("w") && (!groundCheck || groundCheck.isGrounded))
         {
-            Debug.Log(groundCheck.isGrounded);
             rigidBody.AddForce(Vector3.up * 100 * jumpStrength);
             Jumped?.Invoke();
             jumpSound.Play();
