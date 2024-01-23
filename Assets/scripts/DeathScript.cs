@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DeathScript : MonoBehaviour        // This script is a component of the kill point game object, that gets triggered when the player steps on the head of the enemy
